@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Stocks/Home
+
+{% endblock  %}
+
+{% block content %}
+
+<br>
+{% if api %}
+{% if error %}
+<h1>{{error}}</h1>
+{% else %}
+<h1>{{api.companyName}}</h1>
+<h2>Price: ${{api.latestPrice}}</h2>
+<h2>Previous close: ${{api.previousClose}}</h2>
+<h2>MarketCap: {{api.marketCap}}</h2>
+<h2>Year to day change: {{api.ytdChange}}</h2>
+<h2>week52High: {{api.week52High}}</h2>
+<h2>week52Low: {{api.week52Low}}</h2>
+<br><br><br>
+{% endif %}
+
+{% else %}
+
+<h1>Please, enter quote for the company, you want to find</h1>
+
+{% endif %}
+{% endblock  %}

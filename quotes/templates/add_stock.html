@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+Add stock
+
+{% endblock  %}
+
+{% block content %}
+
+
+<h1>Add stock</h1>
+<br><br><br>
+{% if form %}
+
+<form action={% url 'add_stock' %} method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Add a quote">
+</form>
+
+{% endif %}
+
+{% if messages %}
+{% for message in messages %}
+    {{message}}
+{% endfor %}
+{% endif %}
+
+
+<br><br><br>
+
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th scope="col"> Valid Quotes</th>
+      <th scope="col"> CompanyName</th>
+      <th scope="col"> PrimaryExchange</th>
+       <th scope="col"> LatestPrice</th>
+       <th scope="col"> PreviousClose</th>
+       <th scope="col"> marketCap</th>
+       <th scope="col"> Delete Quotes</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+      {% if api_data %}
+      {% for quote, api in api_data.items %}
+      <tr>
+
+        <td>{{quote}}</td>
+        <td>{{api.companyName}}</td>
+        <td>{{api.primaryExchange}}</td>
+        <td>{{api.latestPrice}}</td>
+        <td>{{api.previousClose}}</td>
+        <td>{{api.marketCap}}</td>
+        <td><a href={% url 'delete_stock' quote.id %}><button type="button" class="btn btn-danger">Delete quote</button></a></td>
+
+
+      </tr>
+
+      {% endfor %}
+      {% endif %}
+
+  </tbody>
+</table>
+
+{% endblock  %}
